@@ -24,3 +24,9 @@ Store and display AUD currency pair
 ```
     dotnet ef database update
 ```
+
+### To start up postgres DB within docker compose
+
+```
+    docker compose -f compose.yml up --build
+```

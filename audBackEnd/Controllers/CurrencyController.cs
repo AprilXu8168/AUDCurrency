@@ -46,7 +46,7 @@ namespace audBackEnd.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCurrencyItem(int id, CurrencyItem currencyItem)
         {
-            if (id != currencyItem.Timestamp)
+            if (id != currencyItem.ID)
             {
                 return BadRequest();
             }
@@ -80,7 +80,7 @@ namespace audBackEnd.Controllers
             _context.CurrencyItems.Add(currencyItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCurrencyItem", new { id = currencyItem.Timestamp }, currencyItem);
+            return CreatedAtAction("GetCurrencyItem", new { id = currencyItem.ID }, currencyItem);
         }
 
         // DELETE: api/Currency/5
@@ -101,7 +101,7 @@ namespace audBackEnd.Controllers
 
         private bool CurrencyItemExists(int id)
         {
-            return _context.CurrencyItems.Any(e => e.Timestamp == id);
+            return _context.CurrencyItems.Any(e => e.ID == id);
         }
     }
 }

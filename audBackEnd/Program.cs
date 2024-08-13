@@ -7,8 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<CurrenciesDBContext>(opt =>
-    opt.UseInMemoryDatabase("CurrenciesDB"));
+var conn = builder.Configuration.GetConnectionString("db_connection");
+    builder.Services.AddDbContext<CurrenciesDBContext>(options =>
+    options.UseNpgsql(conn));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,5 +31,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseCors(c => c.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
 app.Run();
