@@ -31,6 +31,11 @@ Store and display AUD currency pair
     docker compose -f compose.yml up --build
 ```
 
+### Fetch public api for currency 
+```
+    https://api.freecurrencyapi.com/v1/currencies?apikey=fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY&currencies=&base_currency=AUD
+1```
+
 ### Init data
 ```
 [

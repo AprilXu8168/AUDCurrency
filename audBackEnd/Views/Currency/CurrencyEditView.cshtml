@@ -1,0 +1,60 @@
+@model audBackEnd.Models.CurrencyItem
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CurrencyEditView</title>
+</head>
+<body>
+
+<h4>CurrencyItem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CurrencyEditView">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="Timestamp" class="control-label"></label>
+                <input asp-for="Timestamp" class="form-control" />
+                <span asp-validation-for="Timestamp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="moneyCode" class="control-label"></label>
+                <input asp-for="moneyCode" class="form-control" />
+                <span asp-validation-for="moneyCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="baseValue" class="control-label"></label>
+                <input asp-for="baseValue" class="form-control" />
+                <span asp-validation-for="baseValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="value" class="control-label"></label>
+                <input asp-for="value" class="form-control" />
+                <span asp-validation-for="value" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>
