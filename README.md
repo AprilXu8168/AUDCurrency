@@ -30,3 +30,25 @@ Store and display AUD currency pair
 ```
     docker compose -f compose.yml up --build
 ```
+
+### Init data
+```
+[
+  {
+    "id": 1,
+    "timestamp": 1723688358,
+    "name": "Chinese",
+    "moneyCode": "CNY",
+    "baseValue": 1,
+    "value": 4.776
+  },
+  {
+    "id": 2,
+    "timestamp": 1723688338,
+    "name": "Japanese",
+    "moneyCode": "JPY",
+    "baseValue": 1,
+    "value": 430
+  }
+]
+```
