@@ -18,10 +18,14 @@ class App extends Component{
   }
 
   async refreshCurrency(){
-    fetch(this.API_URL+"api/Currency/").then(response => response.json())
-    .then(data => {
-      this.setState({currencies:data});
-    })
+    try {
+      const response = await fetch(this.API_URL + "api/Currency/");
+      const data = await response.json();
+      console.log("Received data:", data); // Log the received JSON data
+      this.setState({ currencies: data });
+    } catch (error) {
+      console.error("Error fetching currency data:", error);
+    }
 }
 
   
