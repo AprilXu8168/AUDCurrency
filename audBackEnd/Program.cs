@@ -8,11 +8,11 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddDbContext<CurrenciesDBContext>(opt =>
-    opt.UseInMemoryDatabase("CurrencyList"));
-// var conn = builder.Configuration.GetConnectionString("db_connection");
-//     builder.Services.AddDbContext<CurrenciesDBContext>(options =>
-//     options.UseNpgsql(conn));
+// builder.Services.AddDbContext<CurrenciesDBContext>(opt =>
+//     opt.UseInMemoryDatabase("CurrencyList"));
+var conn = builder.Configuration.GetConnectionString("db_connection");
+    builder.Services.AddDbContext<CurrenciesDBContext>(options =>
+    options.UseNpgsql(conn));
 
 var app = builder.Build();
 

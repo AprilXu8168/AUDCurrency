@@ -1,0 +1,27 @@
+@model IEnumerable<audBackEnd.Models.CurrencyItem>
+
+<h2>Currency Items</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Code</th>
+            <th>Name</th>
+            <th>Exchange Rate</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.moneyCode</td>
+                <td>@item.Name</td>
+                <td>@item.value</td>
+                <td>
+                    <a href="@Url.Action("CurrencyDetails", "Currency", new { id = item.ID })" class="btn btn-primary">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

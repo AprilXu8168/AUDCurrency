@@ -15,6 +15,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        ViewData["Title"] = "AUD Currency Reviewing Page";
+        ViewData["Message"] = "Welcome to the BackEnd of AUDCurrency App!";
         return View();
     }
 
