@@ -57,3 +57,10 @@ Store and display AUD currency pair
   }
 ]
 ```
+
+### Ports Checking
+| **Service**  | **URL**                                                            |
+|--------------|--------------------------------------------------------------------|
+| pgAdmin      | [localhost:8888](http://localhost:8888)                            |
+| SwaggerApi   | [localhost:5151/swagger](http://localhost:5151/swagger/index.html) |
+| ClientSide   | [localhost:3000/](http://localhost:3000/)                          |
