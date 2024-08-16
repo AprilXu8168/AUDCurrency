@@ -64,7 +64,7 @@ public class CurrencyController : Controller
                 return NotFound();
             }
 
-            return View("Edit", display);
+            return View(display);
         }
         catch (DbUpdateConcurrencyException)
         {
@@ -84,7 +84,7 @@ public class CurrencyController : Controller
     // POST: api/Currency
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<CurrencyItem>> PostCurrencyItem(CurrencyItem currencyItem)
+    public async Task<ActionResult<CurrencyItem>> CurrencyCreate(CurrencyItem currencyItem)
     {
         _context.CurrencyItems.Add(currencyItem);
         await _context.SaveChangesAsync();
