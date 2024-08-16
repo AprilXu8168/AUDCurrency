@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using audBackEnd.Models;
+using Newtonsoft.Json;
 using System.Text.Json;
 
 
@@ -15,9 +16,10 @@ namespace audBackEnd.Controllers
     {
         // GET: api/Fetcher
         [HttpGet]
-        public async Task<ActionResult<CurrencyRates>> FetchRateContent()
+        // public async Task<ActionResult<CurrencyRates>> FetchRateContent()
+        public async Task<IActionResult> FetchRateContent()
         {
-            string url = "http://api.freecurrencyapi.com/v1/latest"; 
+            string url = "http://api.currencyapi.com/v3/latest"; 
             string apikey = "fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY";
             string content = "";
 
@@ -25,7 +27,9 @@ namespace audBackEnd.Controllers
             {
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync(url+"?apikey="+apikey+"&currencies=&base_currency=AUD");
+                    string tar = url+"?apikey="+apikey+"&currencies=&base_currency=AUD";
+                    Console.WriteLine("target url:{0}", tar);
+                    HttpResponseMessage response = await client.GetAsync(tar);
                     response.EnsureSuccessStatusCode();
                     content = await response.Content.ReadAsStringAsync();
                 }
@@ -42,13 +46,15 @@ namespace audBackEnd.Controllers
             ViewBag.Content = content;
 
             var parsedJson = JsonDocument.Parse(content);
-            var jsonData = parsedJson.RootElement.GetProperty("data").GetRawText();
-            Console.WriteLine(content);
-            var currencyRates = JsonSerializer.Deserialize<CurrencyRates>(jsonData);
+            var jsonData = parsedJson.RootElement.GetRawText();
+            var jsonHeader = parsedJson.RootElement.GetProperty("meta").GetRawText();
             
-            Console.WriteLine($"AUD: {currencyRates.AUD}");
-            Console.WriteLine($"USD: {currencyRates.USD}");
-            return currencyRates;
+            Console.WriteLine("json Header:{0}",jsonHeader);
+            
+            // CurrencyRates currencyRates = JsonSerializer.Deserialize<CurrencyRates>(jsonData);
+            CurrencyRates currency = JsonConvert.DeserializeObject<CurrencyRates>(jsonData);
+            Console.WriteLine($"Last Updated At: {currency.Meta.LastUpdatedAt}");
+            return View(currency);
         }
     }
 }

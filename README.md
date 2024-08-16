@@ -34,6 +34,10 @@ Store and display AUD currency pair
 ### Fetch public api for currency 
 ```
     https://api.freecurrencyapi.com/v1/currencies?apikey=fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY&currencies=&base_currency=AUD
+
+    https://api.currencyapi.com/v3/latest?apikey=fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY&base_currency=AUD
+    
+    https://app.freecurrencyapi.com/dashboard
 ```
 
 ### Init data
