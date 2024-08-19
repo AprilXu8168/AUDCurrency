@@ -1,16 +1,15 @@
 services:
-  db:
+  postgresdb:
     image: postgres:14.1-alpine
     restart: always
     environment:
+      - postgresdb=dogtainers
       - POSTGRES_USER=dogtainers
       - POSTGRES_PASSWORD=dogtainers
     ports:
       - "5432:5432"
-
     volumes:
-      - db:/var/lib/postgresql/data
-
+      - ./postgresdb/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - host
 
@@ -20,17 +19,17 @@ services:
     restart: always
     ports:
       - "8888:80"
+    depends_on:
+      - postgresdb
     environment: 
       - PGADMIN_DEFAULT_EMAIL=user@dogtainers.com.au
       - PGADMIN_DEFAULT_PASSWORD=user
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
     networks:
       - host
-
-volumes:
-  db:
-  pgadmin-data:
 
 networks:
   host:

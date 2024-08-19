@@ -1,0 +1,15 @@
+{
+    "Servers": {
+      "1": {
+        "Name": "currencyDB",
+        "Group": "Servers",
+        "Host": "postgresdb",
+        "Port": 5432,
+        "MaintenanceDB": "postgres",
+        "Username": "dogtainers",
+        "Password": "dogtainers",
+        "SSLMode": "prefer",
+        "ConnectNow": true
+      }
+    }
+  }
