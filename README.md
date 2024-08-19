@@ -14,9 +14,13 @@ Store and display AUD currency pair
     npm install
     npm run dev
 ```
+### To start up postgres DB within docker compose
 
+```
+    docker compose -f compose.yml up --build
+```
 
-### To generat controller base on model and db context
+### To generate controller base on model and db context
 ```
     dotnet aspnet-codegenerator controller -name CurrencyController -async -api -m CurrencyItem -dc CurrenciesDBContext -outDir Controllers
 ```
@@ -24,12 +28,6 @@ Store and display AUD currency pair
 ### To update dababase
 ```
     dotnet ef database update
-```
-
-### To start up postgres DB within docker compose
-
-```
-    docker compose -f compose.yml up --build
 ```
 
 ### Fetch public api for currency 
