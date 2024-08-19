@@ -21,11 +21,10 @@ public class CurrencyController : Controller
 
     // GET: api/Currency
     [HttpGet]
-    public async  Task<IActionResult> CurrencyList()
+    public async Task<IActionResult> CurrencyList()
     {
-        // return await _context.CurrencyItems.ToListAsync();
         var currencyItems = await _context.CurrencyItems.ToListAsync();
-        return View(currencyItems);
+        return Json(currencyItems);
     }
 
     // GET: api/Currency/5
@@ -45,14 +44,14 @@ public class CurrencyController : Controller
     // PUT: api/Currency/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<ActionResult<CurrencyItem>> CurrencyEdit(int id, CurrencyItem currencyItem)
+    public async Task<ActionResult<CurrencyItem>> CurrencyEdit(int id, CurrencyItem currencyitem)
     {
-        if (id != currencyItem.ID)
+        if (id != currencyitem.ID)
         {
             return BadRequest();
         }
 
-        _context.Entry(currencyItem).State = EntityState.Modified;
+        _context.Entry(currencyitem).State = EntityState.Modified;
 
         try
         {
@@ -84,12 +83,12 @@ public class CurrencyController : Controller
     // POST: api/Currency
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<CurrencyItem>> CurrencyCreate(CurrencyItem currencyItem)
+    public async Task<ActionResult<CurrencyItem>> CurrencyCreate(CurrencyItem currencyitem)
     {
-        _context.CurrencyItems.Add(currencyItem);
+        _context.CurrencyItems.Add(currencyitem);
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction("CurrencyDetails", new { id = currencyItem.ID }, currencyItem);
+        return CreatedAtAction("CurrencyDetails", new { id = currencyitem.ID }, currencyitem);
     }
 
     // DELETE: api/Currency/5

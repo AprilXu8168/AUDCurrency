@@ -7,7 +7,7 @@ public class CurrencyRates
 
 public class Meta
 {
-    public DateTime LastUpdatedAt { get; set; }
+    public DateTimeOffset LastUpdatedAt { get; set; }
 }
 
 public class Currency
