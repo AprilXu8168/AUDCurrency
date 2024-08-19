@@ -95,10 +95,14 @@ Store and display AUD currency pair
 
 - <s>create database and connection via compose file instead of manually operator on pgadmin</s>
 
-- Create an 'ExchangeRatesService' class with the method 'UpdateRates'. This should call a public exchange rates API to get a variety of AUD/X currency pairs, eg AUD/GBP and adds them as rows into your database in a table called 'exchangeRates'. The method should return a list of each currency pair and their exchange rate. eg [["AUDUSD", 0.66],["AUD/GBP", 0.51]]
+- Name convention
 
-- Create a single controller called 'ExchangeRatesController' with the route 'UpdateRates' that instantiates an instance of the ExchangeRatesService and calls exchangeRatesService.UpdateRates() and returns its result (the list of pairs + exchange rates)
+    - Create an 'ExchangeRatesService' class with the method 'UpdateRates'. This should call a public exchange rates API to get a variety of AUD/X currency pairs, eg AUD/GBP and adds them as rows into your database in a table called 'exchangeRates'. The method should return a list of each currency pair and their exchange rate. eg [["AUDUSD", 0.66],["AUD/GBP", 0.51]]
 
-- Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. Document how to view this in your repo.
+    - Create a single controller called 'ExchangeRatesController' with the route 'UpdateRates' that instantiates an instance of the ExchangeRatesService and calls exchangeRatesService.UpdateRates() and returns its result (the list of pairs + exchange rates)
+
+- Error Handler
+
+- Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. **Document** how to view this in your repo.
 
 - And then once you are done, the next step may take you a while. Add the **'Hot Chocolate'** package to your API. Read its documentation and figure out how to call ExchangeRatesService.UpdateRates() via a mutation, and how to test it in your browser using https://graphql-dotnet.github.io/docs/getting-started/graphiql/ or similar.
