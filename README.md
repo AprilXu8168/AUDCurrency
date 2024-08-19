@@ -91,9 +91,9 @@ Store and display AUD currency pair
 - You must display a timestamp in the ui showing when the rates were last updated.
  
  ### Todo Next
-- Add requirements to readme doc 
+- <s>Add requirements to readme doc</s>
 
-- create database and connection via compose file instead of manually operator on pgadmin
+- <s>create database and connection via compose file instead of manually operator on pgadmin</s>
 
 - Create an 'ExchangeRatesService' class with the method 'UpdateRates'. This should call a public exchange rates API to get a variety of AUD/X currency pairs, eg AUD/GBP and adds them as rows into your database in a table called 'exchangeRates'. The method should return a list of each currency pair and their exchange rate. eg [["AUDUSD", 0.66],["AUD/GBP", 0.51]]
 

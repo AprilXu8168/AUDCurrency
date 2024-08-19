@@ -7,11 +7,11 @@ public class CurrencyRates
 
 public class Meta
 {
-    public DateTimeOffset LastUpdatedAt { get; set; }
+    public string Last_update_at { get; set; }
 }
 
 public class Currency
 {
     public string Code { get; set; }
-    public decimal Value { get; set; }
+    public float Value { get; set; }
 }

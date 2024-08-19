@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using audBackEnd.Models;
 using Newtonsoft.Json;
 using System.Text.Json;
+using Microsoft.Identity.Client;
 
 
 namespace audBackEnd.Controllers
@@ -14,11 +15,19 @@ namespace audBackEnd.Controllers
     [ApiController]
     public class FetcherController : Controller
     {
+        private readonly CurrenciesDBContext _context;
+    
+        public FetcherController(CurrenciesDBContext context)
+        {
+            _context = context;
+        }
+
         // GET: api/Fetcher
         [HttpGet]
         // public async Task<ActionResult<CurrencyRates>> FetchRateContent()
         public async Task<IActionResult> FetchRateContent()
         {
+            // Fetch json from public api
             string url = "http://api.currencyapi.com/v3/latest"; 
             string apikey = "fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY";
             string content = "";
@@ -46,15 +55,37 @@ namespace audBackEnd.Controllers
             ViewBag.Content = content;
 
             var parsedJson = JsonDocument.Parse(content);
-            var jsonData = parsedJson.RootElement.GetRawText();
-            var jsonHeader = parsedJson.RootElement.GetProperty("meta").GetRawText();
-            
-            Console.WriteLine("json Header:{0}",jsonHeader);
-            
+            // var jsonData = parsedJson.RootElement.GetRawText();
+            // var jsonHeader = parsedJson.RootElement.GetProperty("meta").GetRawText();    
+
+           CurrencyRates currency = JsonConvert.DeserializeObject<CurrencyRates>(content); 
+           Console.Write(content); 
+           var maxId = _context.CurrencyItems.Count();
+           var id = maxId;
+           if (currency != null)
+           {
+            foreach (var pair in currency.Data.Values)
+            {    
+                    var newItem = new CurrencyItem(){
+                        ID = id + 1,
+                        Timestamp=DateTimeOffset.UtcNow,
+                        Name= pair.Code,
+                        moneyCode = pair.Code,
+                        baseValue = 1,
+                        value = pair.Value,
+                    };
+                    _context.CurrencyItems.Add(newItem);
+                    await _context.SaveChangesAsync();
+            }
+           }
+          
+           return Json(currency);
+
+
             // CurrencyRates currencyRates = JsonSerializer.Deserialize<CurrencyRates>(jsonData);
-            CurrencyRates currency = JsonConvert.DeserializeObject<CurrencyRates>(jsonData);
-            Console.WriteLine($"Last Updated At: {currency.Meta.LastUpdatedAt}");
-            return View(currency);
+            
+            // Console.WriteLine($"Last Updated At: {currency.Meta.LastUpdatedAt}");
+            // return View(currency);
         }
     }
 }

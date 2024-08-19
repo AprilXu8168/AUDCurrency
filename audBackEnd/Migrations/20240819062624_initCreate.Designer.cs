@@ -12,7 +12,7 @@ using audBackEnd.Models;
 namespace audBackEnd.Migrations
 {
     [DbContext(typeof(CurrenciesDBContext))]
-    [Migration("20240819040902_initCreate")]
+    [Migration("20240819062624_initCreate")]
     partial class initCreate
     {
         /// <inheritdoc />

@@ -4,7 +4,6 @@ namespace audBackEnd.Models;
 
 public class CurrencyItem
 {
-    [Key]
     public int ID  {get; set; }
     public DateTimeOffset Timestamp { get; set; }
     public string? Name{ get; set; }
