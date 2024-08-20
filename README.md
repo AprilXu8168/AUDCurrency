@@ -2,6 +2,57 @@
 Store and display AUD currency pair 
 
 ## How to start currency project
+### Ports Checking
+| **Service**  | **URL**                                                            |
+|--------------|--------------------------------------------------------------------|
+| pgAdmin      | [localhost:8888](http://localhost:8888)                            |
+| SwaggerApi   | [Swagger](http://localhost:5151)                    |
+| Postgres     | [localhost:5432](http://localhost:5432/)                          |
+
+### To review all available api operations:
+[localhost:5151](http://localhost:5151)
+![api home page](assets/image.png)
+### To view all saved currency data
+
+- Option 1
+    Simple click /api/ExchangeRatesService shown as above
+
+- Option 2
+    open a brwoser, url: http://localhost:5151/api/ExchangeRatesService
+
+### To trigger a fetch action
+- Option 1
+    Simple click GET /api/ExchangeRatesService/update_Rates
+- Option 2
+    open a brwoser, url: http://localhost:5151/api/ExchangeRatesService/update_Rates
+
+### To review simgle record from db
+- Option 1:
+    Simple click GET /api/ExchangeRatesService/{id}
+- Option 2:
+    http://localhost:5151/api/ExchangeRatesService/id
+    e.g. http://localhost:5151/api/ExchangeRatesService/46
+
+## To interacte with database via pgadmin
+
+open a browser, url: localhost:8888
+
+<details> 
+
+   <summary> Click to show user credentials </summary>
+
+    The username and password for pgadmin: 
+
+    - userName: user@dogtainers.com.au
+    - passWord: user
+
+
+    The user name and password for connecting to db
+ 
+    - user: dogtainers
+    - password: dogtainers
+</details>
+
 ### To start up the backend 
 ```
     cd audBackEnd
@@ -31,13 +82,16 @@ Store and display AUD currency pair
 ```
 
 ### Fetch public api for currency 
-```
+<details>
+
+<summary> AUD exchange rate fetch api  </summary>
+
     https://api.freecurrencyapi.com/v1/currencies?apikey=fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY&currencies=&base_currency=AUD
 
     https://api.currencyapi.com/v3/latest?apikey=fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY&base_currency=AUD
     
     https://app.freecurrencyapi.com/dashboard
-```
+</details>
 
 ### Init data
 ```
@@ -60,13 +114,6 @@ Store and display AUD currency pair
   }
 ]
 ```
-
-### Ports Checking
-| **Service**  | **URL**                                                            |
-|--------------|--------------------------------------------------------------------|
-| pgAdmin      | [localhost:8888](http://localhost:8888)                            |
-| SwaggerApi   | [localhost:5151/swagger](http://localhost:5151/swagger/index.html) |
-| ClientSide   | [localhost:3000/](http://localhost:3000/)                          |
 
 
 ## Requirement and Progress
@@ -101,6 +148,8 @@ Store and display AUD currency pair
 
 - Error Handler
 
-- Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. **Document** how to view this in your repo.
+- Hourly reFetch trigger
+
+-  <s>Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. **Document** how to view this in your repo. </s>
 
 - And then once you are done, the next step may take you a while. Add the **'Hot Chocolate'** package to your API. Read its documentation and figure out how to call ExchangeRatesService.UpdateRates() via a mutation, and how to test it in your browser using https://graphql-dotnet.github.io/docs/getting-started/graphiql/ or similar.

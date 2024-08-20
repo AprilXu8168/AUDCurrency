@@ -12,16 +12,16 @@ namespace ExchangeRatesService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ExchangeRateServiceController : Controller
+    public class ExchangeRatesServiceController : Controller
     {
         private readonly CurrenciesDBContext _context;
 
-        public ExchangeRateServiceController(CurrenciesDBContext context)
+        public ExchangeRatesServiceController(CurrenciesDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/ExchangeRateService
+        // GET: api/ExchangeRatesService
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CurrencyPair>>> GetCurrencyPairs()
         {
@@ -91,7 +91,7 @@ namespace ExchangeRatesService.Controllers
  
 
 
-        // GET: api/ExchangeRateService/5
+        // GET: api/ExchangeRatesService/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CurrencyPair>> GetCurrencyPair(int id)
         {
@@ -105,63 +105,63 @@ namespace ExchangeRatesService.Controllers
             return currencyPair;
         }
 
-        // PUT: api/ExchangeRateService/5
+        // PUT: api/ExchangeRatesService/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCurrencyPair(int id, CurrencyPair currencyPair)
-        {
-            if (id != currencyPair.ID)
-            {
-                return BadRequest();
-            }
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> PutCurrencyPair(int id, CurrencyPair currencyPair)
+        // {
+        //     if (id != currencyPair.ID)
+        //     {
+        //         return BadRequest();
+        //     }
 
-            _context.Entry(currencyPair).State = EntityState.Modified;
+        //     _context.Entry(currencyPair).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CurrencyPairExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //     try
+        //     {
+        //         await _context.SaveChangesAsync();
+        //     }
+        //     catch (DbUpdateConcurrencyException)
+        //     {
+        //         if (!CurrencyPairExists(id))
+        //         {
+        //             return NotFound();
+        //         }
+        //         else
+        //         {
+        //             throw;
+        //         }
+        //     }
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
-        // POST: api/ExchangeRateService
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<CurrencyPair>> PostCurrencyPair(CurrencyPair currencyPair)
-        {
-            _context.CurrencyPairs.Add(currencyPair);
-            await _context.SaveChangesAsync();
+        // // POST: api/ExchangeRatesService
+        // // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // [HttpPost]
+        // public async Task<ActionResult<CurrencyPair>> PostCurrencyPair(CurrencyPair currencyPair)
+        // {
+        //     _context.CurrencyPairs.Add(currencyPair);
+        //     await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCurrencyPair", new { id = currencyPair.ID }, currencyPair);
-        }
+        //     return CreatedAtAction("GetCurrencyPair", new { id = currencyPair.ID }, currencyPair);
+        // }
 
-        // DELETE: api/ExchangeRateService/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCurrencyPair(int id)
-        {
-            var currencyPair = await _context.CurrencyPairs.FindAsync(id);
-            if (currencyPair == null)
-            {
-                return NotFound();
-            }
+        // // DELETE: api/ExchangeRatesService/5
+        // [HttpDelete("{id}")]
+        // public async Task<IActionResult> DeleteCurrencyPair(int id)
+        // {
+        //     var currencyPair = await _context.CurrencyPairs.FindAsync(id);
+        //     if (currencyPair == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            _context.CurrencyPairs.Remove(currencyPair);
-            await _context.SaveChangesAsync();
+        //     _context.CurrencyPairs.Remove(currencyPair);
+        //     await _context.SaveChangesAsync();
 
-            return NoContent();
-        }
+        //     return NoContent();
+        // }
 
         private bool CurrencyPairExists(int id)
         {
