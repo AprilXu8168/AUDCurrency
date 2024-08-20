@@ -148,7 +148,11 @@ open a browser, url: localhost:8888
 
 - Error Handler
 
-- Hourly reFetch trigger
+- Hourly reFetch triggerh
+
+- Check data not same every fetch
+
+- About timestamp
 
 -  <s>Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. **Document** how to view this in your repo. </s>
 
