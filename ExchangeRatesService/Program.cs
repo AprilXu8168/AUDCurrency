@@ -1,15 +1,24 @@
 using Microsoft.EntityFrameworkCore;
 using ExchangeRatesService.Models;
+using ExchangeRatesService.Graphql;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<ExchangeRatesType>();
+builder.Services.AddSingleton<ExchangeRatesSchema>();
+
+builder.Services.AddScoped<ExchangeRatesService>();
+
+// Add other services, including GraphQL services
+builder.Services.AddSingleton<>();
+builder.Services.AddGraphQLServer()
+    .AddQueryType<ExchangeRatesQuery>()
+    .AddMutationType<ExchangeRatesMutation>();
 
 
-// builder.Services.AddDbContext<CurrenciesDBContext>(opt =>
-    // opt.UseInMemoryDatabase("CurrencyList"));
 var conn = builder.Configuration.GetConnectionString("db_connection");
     builder.Services.AddDbContext<CurrenciesDBContext>(options =>
     options.UseNpgsql(conn));
@@ -29,8 +38,11 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseGraphQLGraphiQL();
+
 app.UseHttpsRedirection();
-// app.UseStaticFiles();
+
+app.UseStaticFiles();
 
 app.UseRouting();
 

@@ -8,6 +8,7 @@ Store and display AUD currency pair
 | pgAdmin      | [localhost:8888](http://localhost:8888)                            |
 | SwaggerApi   | [Swagger](http://localhost:5151)                    |
 | Postgres     | [localhost:5432](http://localhost:5432/)                          |
+| GraphiQL     | [GraphiQL ui](http://localhost:5151/ui/graphiql)
 
 ### To review all available api operations:
 [localhost:5151](http://localhost:5151)
@@ -149,6 +150,10 @@ open a browser, url: localhost:8888
 - Error Handler
 
 - Hourly reFetch trigger
+
+- Check data difference 
+
+- About timestamp 
 
 -  <s>Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. **Document** how to view this in your repo. </s>
 

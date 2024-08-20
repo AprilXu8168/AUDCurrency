@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using GraphQL.Types;
 
 namespace ExchangeRatesService.Models;
 

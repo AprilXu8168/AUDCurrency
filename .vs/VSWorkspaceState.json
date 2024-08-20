@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\assets",
+    "\\docker",
+    "\\ExchangeRatesService",
+    "\\ExchangeRatesService\\Data",
+    "\\ExchangeRatesService\\Models"
+  ],
+  "SelectedNode": "\\ExchangeRatesService\\Data\\iCurrencyItemRepository.cs",
+  "PreviewInSolutionExplorer": false
+}
