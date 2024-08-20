@@ -26,7 +26,7 @@ Store and display AUD currency pair
 - Option 2
     open a brwoser, url: http://localhost:5151/api/ExchangeRatesService/update_Rates
 
-### To review simgle record from db
+### To review single record from db
 - Option 1:
     Simple click GET /api/ExchangeRatesService/{id}
 - Option 2:
