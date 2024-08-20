@@ -95,9 +95,9 @@ Store and display AUD currency pair
 
 - Name convention
 
-    - Create an 'ExchangeRatesService' class with the method 'UpdateRates'. This should call a public exchange rates API to get a variety of AUD/X currency pairs, eg AUD/GBP and adds them as rows into your database in a table called 'exchangeRates'. The method should return a list of each currency pair and their exchange rate. eg [["AUDUSD", 0.66],["AUD/GBP", 0.51]]
+   <s> - Create an 'ExchangeRatesService' class with the method 'UpdateRates'. This should call a public exchange rates API to get a variety of AUD/X currency pairs, eg AUD/GBP and adds them as rows into your database in a table called 'exchangeRates'. The method should return a list of each currency pair and their exchange rate. eg [["AUDUSD", 0.66],["AUD/GBP", 0.51]]
 
-    - Create a single controller called 'ExchangeRatesController' with the route 'UpdateRates' that instantiates an instance of the ExchangeRatesService and calls exchangeRatesService.UpdateRates() and returns its result (the list of pairs + exchange rates)
+    - Create a single controller called 'ExchangeRatesController' with the route 'UpdateRates' that instantiates an instance of the ExchangeRatesService and calls exchangeRatesService.UpdateRates() and returns its result (the list of pairs + exchange rates)</s>
 
 - Error Handler
 

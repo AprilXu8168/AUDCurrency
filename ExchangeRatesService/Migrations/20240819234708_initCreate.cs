@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace audBackEnd.Migrations
+namespace ExchangeRatesService.Migrations
 {
     /// <inheritdoc />
     public partial class initCreate : Migration
@@ -13,20 +13,18 @@ namespace audBackEnd.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "CurrencyItems",
+                name: "CurrencyPairs",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Timestamp = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    moneyCode = table.Column<string>(type: "text", nullable: true),
-                    baseValue = table.Column<float>(type: "real", nullable: false),
-                    value = table.Column<float>(type: "real", nullable: false)
+                    Value = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CurrencyItems", x => x.ID);
+                    table.PrimaryKey("PK_CurrencyPairs", x => x.ID);
                 });
         }
 
@@ -34,7 +32,7 @@ namespace audBackEnd.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CurrencyItems");
+                name: "CurrencyPairs");
         }
     }
 }

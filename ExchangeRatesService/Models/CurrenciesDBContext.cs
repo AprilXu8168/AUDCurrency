@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
    
-    namespace audBackEnd.Models;
+    namespace ExchangeRatesService.Models;
 
     public class CurrenciesDBContext : DbContext
     {
@@ -8,5 +8,5 @@ using Microsoft.EntityFrameworkCore;
             : base(options)
         {
         }
-        public DbSet<CurrencyItem> CurrencyItems { get; set; }
+        public DbSet<CurrencyPair> CurrencyPairs { get; set; }
     }

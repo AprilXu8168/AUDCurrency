@@ -1,4 +1,4 @@
-namespace audBackEnd.Models;
+namespace ExchangeRatesService.Models;
 public class CurrencyRates
 {
     public Meta Meta { get; set; }

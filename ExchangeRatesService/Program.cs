@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using audBackEnd.Models;
+using ExchangeRatesService.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ builder.Services.AddSwaggerGen();
 
 
 // builder.Services.AddDbContext<CurrenciesDBContext>(opt =>
-//     opt.UseInMemoryDatabase("CurrencyList"));
+    // opt.UseInMemoryDatabase("CurrencyList"));
 var conn = builder.Configuration.GetConnectionString("db_connection");
     builder.Services.AddDbContext<CurrenciesDBContext>(options =>
     options.UseNpgsql(conn));
@@ -20,12 +20,17 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1");
+        options.RoutePrefix = string.Empty; // Set the Swagger UI at the root URL
+    });
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+// app.UseStaticFiles();
 
 app.UseRouting();
 
