@@ -141,10 +141,11 @@ open a browser, url: localhost:8888
 - <s>create database and connection via compose file instead of manually operator on pgadmin</s>
 
 - Name convention
-<br>
+    <br>
     **The service has been named as "EXChangeService" as the name ExchangeRatesServices has been set as namespace for whole backend app.**
 
-    The database table name is "CurrencyPairs"
+    The database table name is ```CurrencyPairs```
+    <br>    
     ```
     {
         "id": 250,
@@ -154,9 +155,9 @@ open a browser, url: localhost:8888
     }
     ```
 
-   <s> - Create an 'ExchangeRatesService' class with the method 'UpdateRates'. This should call a public exchange rates API to get a variety of AUD/X currency pairs, eg AUD/GBP and adds them as rows into your database in a table called 'exchangeRates'. The method should return a list of each currency pair and their exchange rate. eg [["AUDUSD", 0.66],["AUD/GBP", 0.51]]
+   <s> - Create an 'ExchangeRatesService' class with the method 'UpdateRates'. This should call a public exchange rates API to get a variety of AUD/X currency pairs, eg AUD/GBP and adds them as rows into your database in a table called 'exchangeRates'. The method should return a list of each currency pair and their exchange rate. eg [["AUDUSD", 0.66],["AUD/GBP", 0.51]]</s>
 
-    - Create a single controller called 'ExchangeRatesController' with the route 'UpdateRates' that instantiates an instance of the ExchangeRatesService and calls exchangeRatesService.UpdateRates() and returns its result (the list of pairs + exchange rates)</s>
+    <s>- Create a single controller called 'ExchangeRatesController' with the route 'UpdateRates' that instantiates an instance of the ExchangeRatesService and calls exchangeRatesService.UpdateRates() and returns its result (the list of pairs + exchange rates)</s>
 
 - Error Handler
 
