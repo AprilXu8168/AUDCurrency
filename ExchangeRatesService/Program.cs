@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEXChangeService, EXChangeService>();
+builder.Services.AddGraphQLServer().AddQueryType<Query>();
 
 var conn = builder.Configuration.GetConnectionString("db_connection");
     builder.Services.AddDbContext<CurrenciesDBContext>(options =>
@@ -24,6 +25,7 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "Your API v1");
         options.RoutePrefix = string.Empty; // Set the Swagger UI at the root URL
     });
+    app.MapGraphQL();
     app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
 }

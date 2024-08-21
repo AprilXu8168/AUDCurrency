@@ -6,8 +6,9 @@ Store and display AUD currency pair
 | **Service**  | **URL**                                                            |
 |--------------|--------------------------------------------------------------------|
 | pgAdmin      | [localhost:8888](http://localhost:8888)                            |
-| SwaggerApi   | [Swagger](http://localhost:5151)                    |
-| Postgres     | [localhost:5432](http://localhost:5432/)                          |
+| SwaggerApi   | [Swagger](http://localhost:5151)                                   |
+| Postgres     | [localhost:5432](http://localhost:5432/)                           |
+| Graphql      | [HotChocolateIDE](http://localhost:5151/graphql/)                  |
 
 ### To review all available api operations:
 [localhost:5151](http://localhost:5151)
