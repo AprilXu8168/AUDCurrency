@@ -1,15 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using ExchangeRatesService.Models;
+using ExchangeRatesService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IEXChangeService, EXChangeService>();
 
-
-// builder.Services.AddDbContext<CurrenciesDBContext>(opt =>
-    // opt.UseInMemoryDatabase("CurrencyList"));
 var conn = builder.Configuration.GetConnectionString("db_connection");
     builder.Services.AddDbContext<CurrenciesDBContext>(options =>
     options.UseNpgsql(conn));

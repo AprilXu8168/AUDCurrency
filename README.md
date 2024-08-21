@@ -141,6 +141,18 @@ open a browser, url: localhost:8888
 - <s>create database and connection via compose file instead of manually operator on pgadmin</s>
 
 - Name convention
+<br>
+    **The service has been named as "EXChangeService" as the name ExchangeRatesServices has been set as namespace for whole backend app.**
+
+    The database table name is "CurrencyPairs"
+    ```
+    {
+        "id": 250,
+        "timestamp": "2024-08-21T01:30:57.714649+00:00",
+        "name": "GIP",
+        "value": 0.5178
+    }
+    ```
 
    <s> - Create an 'ExchangeRatesService' class with the method 'UpdateRates'. This should call a public exchange rates API to get a variety of AUD/X currency pairs, eg AUD/GBP and adds them as rows into your database in a table called 'exchangeRates'. The method should return a list of each currency pair and their exchange rate. eg [["AUDUSD", 0.66],["AUD/GBP", 0.51]]
 
