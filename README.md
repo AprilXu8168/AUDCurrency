@@ -9,6 +9,7 @@ Store and display AUD currency pair
 | SwaggerApi   | [Swagger](http://localhost:5151)                                   |
 | Postgres     | [localhost:5432](http://localhost:5432/)                           |
 | Graphql      | [HotChocolateIDE](http://localhost:5151/graphql/)                  |
+| FrontEnd      | [Next.js](http://localhost:3000/)                                 |
 
 ### To review all available api operations:
 [localhost:5151](http://localhost:5151)

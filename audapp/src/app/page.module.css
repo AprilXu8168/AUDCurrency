@@ -1,0 +1,45 @@
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.h1 {
+  text-align: center;
+  color: #333;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.table tr {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table tr:active {
+  background-color: #e2e2e2;
+}
+
+.table tr:nth-child(even) {
+  background-color: #fafafa;
+}
