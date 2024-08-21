@@ -11,4 +11,7 @@ public class Query
 
     public IQueryable<CurrencyPair> GetCurrencyPair(int id,[Service] CurrenciesDBContext context) =>
         context.CurrencyPairs.Where(cp => cp.ID == id);
+
+    public IQueryable<CurrencyPair> GetCurrencyPairByName(string name,[Service] CurrenciesDBContext context) =>
+        context.CurrencyPairs.Where(cp => cp.Name == name);
 }
