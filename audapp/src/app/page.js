@@ -1,6 +1,7 @@
 "use client";
-import styles from "./page.module.css";
+import style  from './style.css';
 import { React, Component } from 'react';
+import CurrencyList from './CurrencyList';
 
 class App extends Component{
 
@@ -19,24 +20,64 @@ class App extends Component{
     this.refreshCurrency();
   }
 
+  // Fetch REST api endpoint
+//   async refreshCurrency(){
+//  try {
+//       const response = await fetch(this.API_URL + "api/ExchangeRatesService");
+//       const data = await response.json();
+
+//       if (data && data.value) {
+//         const recordCount = data.value.length; // Count the number of new records
+//         console.log(`REST API returned ${recordCount} existing records.`);
+
+//         this.setState({ currencies: data.value });
+//       } else {
+//         alert("No new records were received.");
+//       }
+//      } catch (error) {
+//       console.error("Error fetching currency data from db:", error);
+//     }
+//   }
+
+  // Fetch graphql endpoint with graphql Query
   async refreshCurrency(){
     try {
-      const response = await fetch(this.API_URL + "api/ExchangeRatesService");
-      const data = await response.json();
+      const response = await fetch(this.API_URL + "graphql", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `
+            query {
+              currencyPairs {
+                id
+                name
+                timestamp
+                value
+              }
+            }
+          `,
+        }),
+      });
+      const result = await response.json();
 
-      if (data && data.value) {
-        const recordCount = data.value.length; // Count the number of new records
-        console.log(`Found ${recordCount} existing records.`);
-
-        this.setState({ currencies: data.value });
+      if (result.data && result.data.currencyPairs) {
+        const currencyPairs = result.data.currencyPairs;
+        const recordCount = currencyPairs.length; // Count the number of records
+        console.log(`Graphql has returned ${recordCount} existing records.`);
+        
+        this.setState({ currencies: currencyPairs });
       } else {
         alert("No new records were received.");
       }
-     } catch (error) {
-      console.error("Error fetching currency data from db:", error);
+    } catch (error) {
+      console.error("Error fetching currency data from GraphQL:", error);
     }
   }
 
+
+  // Calling methods from backend API as fetch only defined in service instead of
   async fetchLatest(){
     try {
       const response = await fetch(this.API_URL + "api/ExchangeRatesService/update_Rates");
@@ -64,57 +105,12 @@ class App extends Component{
       return <p>{currencies}</p>;
     }
     return (
-        <main className={styles.container}>
-          <div style={currencyStyles.headerContainer}>
-            <h1 style={currencyStyles.header}>Currency List</h1>
-            <button style={currencyStyles.button} onClick={this.fetchLatest}>Fetch Latest Currency</button>
-          </div>          
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Value</th>
-                <th>Timestamp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {currencies.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
-                  <td>{item.name}</td>
-                  <td>{item.value}</td>
-                  <td>{item.timestamp.toString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </main>
-      );
-  }
+      <><div style={style.headerContainer}>
+          <CurrencyList currencies={currencies} fetchLatest={this.fetchLatest}/>
+        </div></>
+    );
+  };
 }
 
 
-
-const currencyStyles = {
-  headerContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '20px'
-  },
-  header: {
-    margin: 0,
-    marginRight: '20px',
-    fontSize: '24px'
-  },
-  button: {
-    padding: '10px 15px',
-    fontSize: '16px',
-    cursor: 'pointer',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '5px'
-  }
-};
 export default App
