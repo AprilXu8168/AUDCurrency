@@ -23,10 +23,17 @@ class App extends Component{
     try {
       const response = await fetch(this.API_URL + "api/ExchangeRatesService");
       const data = await response.json();
-      console.log("Received data:", data); // Log the received JSON data
-      this.setState({ currencies: data.value });
-    } catch (error) {
-      console.error("Error fetching currency data:", error);
+
+      if (data && data.value) {
+        const recordCount = data.value.length; // Count the number of new records
+        console.log(`Found ${recordCount} existing records.`);
+
+        this.setState({ currencies: data.value });
+      } else {
+        alert("No new records were received.");
+      }
+     } catch (error) {
+      console.error("Error fetching currency data from db:", error);
     }
   }
 
@@ -34,8 +41,16 @@ class App extends Component{
     try {
       const response = await fetch(this.API_URL + "api/ExchangeRatesService/update_Rates");
       const data = await response.json();
-      console.log("Updated data:", data); // Log the received JSON data
-      this.setState({ newFetchRates: data.value });
+
+      // Check if the data has been received successfully
+      if (data && data.value) {
+        const recordCount = data.value.length; // Count the number of new records
+        alert(`Received ${recordCount} new records.`);
+        
+        this.setState({ newFetchRates: data.value });
+      } else {
+        alert("No new records were received.");
+      }
     } catch (error) {
       console.error("Error fetching currency data:", error);
     }
