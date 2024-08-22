@@ -31,5 +31,19 @@ services:
     networks:
       - host
 
+  web:
+    image: 'nextapp'
+    build:
+      context: '../audapp/'
+      dockerfile: '../audapp/Dockerfile'
+    volumes:
+      - .:/var/www/nextapp
+    ports:
+     - 127.0.0.1:4000:3000
+    depends_on:
+     - "postgresdb"
+    networks:
+      - host
+
 networks:
   host:

@@ -138,6 +138,11 @@ open a browser, url: localhost:8888
 - You must display a timestamp in the ui showing when the rates were last updated.
  
  ### Todo Next
+
+- Add a "background service" to your api called CurrencyUpdater. Every (2 minutes in debug mode,  otherwise every hour) this should call currencyService.UpdateExchangeRates() (or whatever your function is called)
+
+- Package this all up in docker. For a way to fix your localhost issue
+
 - <s>Add requirements to readme doc</s>
 
 - <s>create database and connection via compose file instead of manually operator on pgadmin</s>
