@@ -169,6 +169,6 @@ open a browser, url: localhost:8888
 
 - About timestamp
 
--  <s>Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. **Document** how to view this in your repo. </s>
+- <s>Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. **Document** how to view this in your repo.</s>
 
-- And then once you are done, the next step may take you a while. Add the **'Hot Chocolate'** package to your API. Read its documentation and figure out how to call ExchangeRatesService.UpdateRates() via a mutation, and how to test it in your browser using https://graphql-dotnet.github.io/docs/getting-started/graphiql/ or similar.
+- <s> And then once you are done, the next step may take you a while. Add the **'Hot Chocolate'** package to your API. Read its documentation and figure out how to call ExchangeRatesService.UpdateRates() via a mutation, and how to test it in your browser using https://graphql-dotnet.github.io/docs/getting-started/graphiql/ or similar. </s>
