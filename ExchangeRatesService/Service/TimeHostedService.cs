@@ -42,7 +42,7 @@ namespace ExchangeRatesService.Services
                 var exchangeService = scope.ServiceProvider.GetRequiredService<IEXChangeService>();
                 var res = exchangeService.FetchRateContent(); // Ensure FetchUpdate method is available in IExchangeService
                 var output = JsonSerializer.Serialize(res, new JsonSerializerOptions { WriteIndented = true });
-                Console.WriteLine($"Number of items received: {output.Count()}");
+                // Console.WriteLine($"Number of items received: {output.Count()}");
             }
         
             _logger.LogInformation("Timed Hosted Service is working. Count: {Count}", count);

@@ -83,6 +83,10 @@ const CurrencyList = ({ currencies, fetchLatest }) => {
         </select>
       </div>
 
+      <div style={style.infoBar}>
+        <p>{`Found ${filteredCurrencies.length} currency records from DB`}</p>
+      </div>
+      
       {/* Currency Table */}
       <CurrencyTable currencies={filteredCurrencies} />
     </main>
@@ -101,5 +105,12 @@ const style = {
       padding: '5px',
       fontSize: '1rem',
     },
+    infoBar: {
+      padding: '10px',
+      backgroundColor: '#f0f0f0',
+      borderRadius: '5px',
+      marginBottom: '20px',
+      fontSize: '1rem',
+    }
   };
 export default CurrencyList;
