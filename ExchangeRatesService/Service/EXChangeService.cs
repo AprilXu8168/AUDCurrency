@@ -1,126 +1,114 @@
-
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using ExchangeRatesService.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
+// use namespaces like this to avoid unnecessary nesting
 namespace ExchangeRatesService.Services;
-    public class EXChangeService : IEXChangeService
+
+public class ExChangeService(CurrenciesDBContext db) : IExChangeService
+{
+    public Task<List<CurrencyPair>> GetCurrencyPairs()
     {
-        private readonly CurrenciesDBContext _context;
+        return db.CurrencyPairs.ToListAsync();
+    }
 
-        public EXChangeService(CurrenciesDBContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<ActionResult<IEnumerable<CurrencyPair>>> GetCurrencyPairs()
-        {
-            return await _context.CurrencyPairs.ToListAsync();
-        }
-
-        public async Task<ActionResult<IEnumerable<CurrencyPair>>> FetchRateContent()
+    public async Task<List<CurrencyPair>> FetchRateContent()
+    {
+        // by using const (constants) we avoid allocating strings
+        const string baseUrl = "http://api.currencyapi.com/v3/latest"; 
+        const string apikey = "fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY";
+        const string requestUrl = $"{baseUrl}?apikey={apikey}&currencies=&base_currency=AUD";
+        
+        Console.WriteLine($"target url:{requestUrl}");
+        
+        string content;
+        
+        try
         {
             // Fetch json from public api
-            string url = "http://api.currencyapi.com/v3/latest"; 
-            string apikey = "fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY";
-            string content = "";
+            var response = await Program.httpClient.GetAsync(requestUrl);
+            response.EnsureSuccessStatusCode();
+            content = await response.Content.ReadAsStringAsync();
+        }
+        catch (HttpRequestException e)
+        {
+            // Handle errors, log them, etc.
+            Console.WriteLine("\nException Caught!");
+            Console.WriteLine($"Message :{e.Message} ");
+            content = "Error fetching website content.";
+        }
 
-            using (HttpClient client = new HttpClient())
-            {
-                try
-                {
-                    string tar = url+"?apikey="+apikey+"&currencies=&base_currency=AUD";
-                    Console.WriteLine("target url:{0}", tar);
-                    HttpResponseMessage response = await client.GetAsync(tar);
-                    response.EnsureSuccessStatusCode();
-                    content = await response.Content.ReadAsStringAsync();
-                }
-                catch (HttpRequestException e)
-                {
-                    // Handle errors, log them, etc.
-                    Console.WriteLine("\nException Caught!");
-                    Console.WriteLine("Message :{0} ", e.Message);
-                    content = "Error fetching website content.";
-                }
-            }
-    
+        // use System.Text.Json rather than Newtonsoft, unless there is something (rare) that the framework JSON API cannot do
+        var currency = JsonSerializer.Deserialize<CurrencyRates>(content);
 
-            CurrencyRates currency = JsonConvert.DeserializeObject<CurrencyRates>(content); 
-            // Console.Write(content); 
-            var maxId = _context.CurrencyPairs.Max(ci => (int?)ci.ID) ?? 0;
-            var newId = maxId;
-            List<CurrencyPair> currencyPairs = new List<CurrencyPair>();
+        var currencyPairs = new List<CurrencyPair>();
 
-            if (currency != null)
-            {
-                foreach (var pair in currency.Data.Values)
-                {    
-                    newId += 1;
-                    var newItem = new CurrencyPair(){
-                        ID = newId,
-                        Timestamp=DateTimeOffset.UtcNow,
-                        Name= pair.Code,
-                        Value = pair.Value,
-                    };
-                    Console.WriteLine("Current item: {0}", newItem.Name);
-
-                    var existingItem = await _context.CurrencyPairs.FindAsync(newItem.ID);
-                    try
-                    {
-                        if (existingItem == null)
-                        {
-                            // Add the new item to the context
-                            _context.CurrencyPairs.Add(newItem);
-
-                            // Attempt to save changes to the database
-                            await _context.SaveChangesAsync();
-
-                            // Add the new item to the list
-                            currencyPairs.Add(newItem);
-
-                            // Log success message
-                            Console.WriteLine("Inserted currency: {0}: {1}--{2}", newItem.ID, newItem.Name, newItem.Value);
-                        }
-                    }
-                    catch (InvalidOperationException ex)
-                    {
-                        // Handle specific exceptions like InvalidOperationException
-                        Console.WriteLine($"Invalid operation error: {ex.Message}");
-                        // Optionally, rethrow or handle further
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        // Handle exceptions related to database updates
-                        Console.WriteLine($"Database update error: {ex.Message}");
-                        // Optionally, rethrow or handle further
-                    }
-                    catch (Exception ex)
-                    {
-                        // Handle all other types of exceptions
-                        Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-                        // Optionally, rethrow or handle further
-                    }
-                }
-            }
-            
+        if (currency == null)
+        {
             return currencyPairs;
         }
-    
-        public async Task<ActionResult<CurrencyPair>> GetCurrencyPair(int id)
-        {
-            var currencyPair = await _context.CurrencyPairs.FindAsync(id);
-
-            if (currencyPair == null)
+        
+        // ID is defined as not nullable
+        var maxId = db.CurrencyPairs.Max(ci => ci.ID);
+        var newId = maxId;
+        
+        foreach (var pair in currency.Data.Values)
+        {    
+            newId += 1;
+            var newItem = new CurrencyPair
             {
-                return null;
-            }
+                ID = newId,
+                Timestamp=DateTimeOffset.UtcNow,
+                Name= pair.Code,
+                Value = pair.Value,
+            };
+            
+            Console.WriteLine($"Current item: {newItem.Name}");
 
-            return currencyPair;
+            var existingItem = await db.CurrencyPairs.FindAsync(newItem.ID);
+            try
+            {
+                if (existingItem == null)
+                {
+                    // Add the new item to the context
+                    db.CurrencyPairs.Add(newItem);
+
+                    // Attempt to save changes to the database
+                    await db.SaveChangesAsync();
+
+                    // Add the new item to the list
+                    currencyPairs.Add(newItem);
+
+                    // Log success message
+                    Console.WriteLine($"Inserted currency: {newItem.ID}: {newItem.Name}--{newItem.Value}");
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Handle specific exceptions like InvalidOperationException
+                Console.WriteLine($"Invalid operation error: {ex.Message}");
+                // Optionally, rethrow or handle further
+            }
+            catch (DbUpdateException ex)
+            {
+                // Handle exceptions related to database updates
+                Console.WriteLine($"Database update error: {ex.Message}");
+                // Optionally, rethrow or handle further
+            }
+            catch (Exception ex)
+            {
+                // Handle all other types of exceptions
+                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                // Optionally, rethrow or handle further
+            }
         }
 
-        // private bool CurrencyPairExists(int id)
-        // {
-        //     return _context.CurrencyPairs.Any(e => e.ID == id);
-        // }
+        return currencyPairs;
     }
+
+    // fixed nullability
+    public async Task<CurrencyPair?> GetCurrencyPair(int id)
+    {
+        return await db.CurrencyPairs.FindAsync(id);
+    }
+}
