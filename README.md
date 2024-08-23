@@ -60,17 +60,17 @@ open a browser, url: localhost:8888
     cd audBackEnd
     dotnet run dev
 ```
-
+<!-- 
 ### To install and start up frontEnd 
 ```
     cd audapp
     npm install
     npm run dev
-```
-### To start up postgres DB within docker compose
+``` -->
+### To start up postgres DB,pgAdmin and nextapp within docker compose
 
 ```
-    docker compose -f compose.yml up --build
+    docker compose -f docker/compose.yml up --build
 ```
 
 ### To generate controller base on model and db context
