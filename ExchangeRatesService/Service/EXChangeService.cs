@@ -47,7 +47,7 @@ namespace ExchangeRatesService.Services;
     
 
             CurrencyRates currency = JsonConvert.DeserializeObject<CurrencyRates>(content); 
-            Console.Write(content); 
+            // Console.Write(content); 
             var maxId = _context.CurrencyPairs.Max(ci => (int?)ci.ID) ?? 0;
             var newId = maxId;
             List<CurrencyPair> currencyPairs = new List<CurrencyPair>();
@@ -63,17 +63,43 @@ namespace ExchangeRatesService.Services;
                         Name= pair.Code,
                         Value = pair.Value,
                     };
+                    Console.WriteLine("Current item: {0}", newItem.Name);
 
                     var existingItem = await _context.CurrencyPairs.FindAsync(newItem.ID);
-                    if (existingItem == null)
+                    try
                     {
-                        _context.CurrencyPairs.Add(newItem);
-                        await _context.SaveChangesAsync();
-                        currencyPairs.Add(newItem);
-                        Console.WriteLine("Insert currency of: {0}: {1}--{2}", newItem.ID, newItem.Name, newItem.Value);
+                        if (existingItem == null)
+                        {
+                            // Add the new item to the context
+                            _context.CurrencyPairs.Add(newItem);
+
+                            // Attempt to save changes to the database
+                            await _context.SaveChangesAsync();
+
+                            // Add the new item to the list
+                            currencyPairs.Add(newItem);
+
+                            // Log success message
+                            Console.WriteLine("Inserted currency: {0}: {1}--{2}", newItem.ID, newItem.Name, newItem.Value);
+                        }
                     }
-                    else{
-                        Console.WriteLine("id dulicated, insert failed, current maxium id: {0}", maxId);
+                    catch (InvalidOperationException ex)
+                    {
+                        // Handle specific exceptions like InvalidOperationException
+                        Console.WriteLine($"Invalid operation error: {ex.Message}");
+                        // Optionally, rethrow or handle further
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        // Handle exceptions related to database updates
+                        Console.WriteLine($"Database update error: {ex.Message}");
+                        // Optionally, rethrow or handle further
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle all other types of exceptions
+                        Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+                        // Optionally, rethrow or handle further
                     }
                 }
             }

@@ -8,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEXChangeService, EXChangeService>();
+builder.Services.AddHostedService<TimedHostedService>();
+
 builder.Services.AddGraphQLServer().AddQueryType<Query>();
 
 var conn = builder.Configuration.GetConnectionString("db_connection");
