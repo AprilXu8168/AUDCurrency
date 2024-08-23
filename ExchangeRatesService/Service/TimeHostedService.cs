@@ -1,65 +1,40 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NuGet.Protocol;
-using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+namespace ExchangeRatesService.Services;
 
-namespace ExchangeRatesService.Services
+// using a primary constructor
+public class TimedHostedService(ILogger<TimedHostedService> logger, IExChangeService exchangeService)
+    : BackgroundService
 {
-    public class TimedHostedService : IHostedService, IDisposable
+    // added debug check
+    private readonly PeriodicTimer _timer = new(Program.isDebug ? TimeSpan.FromSeconds(120) : TimeSpan.FromHours(1));
+    private int _count;
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        private int executionCount = 0;
-        private readonly ILogger<TimedHostedService> _logger;
-        private readonly IServiceScopeFactory _scopeFactory;
-        private Timer _timer;
-
-        public TimedHostedService(ILogger<TimedHostedService> logger, IServiceScopeFactory scopeFactory)
-        {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
-        }
-
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            _logger.LogInformation("Timed Hosted Service running.");
-
-            // Start the timer to call DoWork method periodically
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(120)); // Change the interval as needed
-
-            return Task.CompletedTask;
-        }
-
-        private void DoWork(object state)
-        {
-            var count = Interlocked.Increment(ref executionCount);
-
-            // Create a scope to resolve the scoped service
-            using (var scope = _scopeFactory.CreateScope())
-            {
-                var exchangeService = scope.ServiceProvider.GetRequiredService<IEXChangeService>();
-                var res = exchangeService.FetchRateContent(); // Ensure FetchUpdate method is available in IExchangeService
-                var output = JsonSerializer.Serialize(res, new JsonSerializerOptions { WriteIndented = true });
-                // Console.WriteLine($"Number of items received: {output.Count()}");
-            }
+        logger.LogInformation("Timed Hosted Service starting.");
         
-            _logger.LogInformation("Timed Hosted Service is working. Count: {Count}", count);
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
+        while (await _timer.WaitForNextTickAsync(stoppingToken))
         {
-            _logger.LogInformation("Timed Hosted Service is stopping.");
-
-            _timer?.Change(Timeout.Infinite, 0);
-
-            return Task.CompletedTask;
+            await DoWork();
         }
 
-        public void Dispose()
+        logger.LogInformation("Timed Hosted Service stopping.");
+    }
+    
+    
+    private async Task DoWork()
+    {
+        logger.LogInformation("Timed Hosted Service is working. Count: {Count}", _count++);
+
+        try
         {
-            _timer?.Dispose();
+            // any further logic should be inside the called function. keep the hosted service simple
+            await exchangeService.FetchRateContent();
         }
+        catch (Exception e)
+        {
+            logger.LogError("Timed Hosted Service failed: {error}", e);
+            // do not throw, as we want the service to try again on the next interval
+        }
+
     }
 }

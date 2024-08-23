@@ -10,9 +10,9 @@ namespace ExchangeRatesService.Controllers
     public class ExchangeRatesServiceController : Controller
     {
         // private readonly CurrenciesDBContext _context;
-        private readonly IEXChangeService _exchangeService;
+        private readonly IExChangeService _exchangeService;
 
-        public ExchangeRatesServiceController(IEXChangeService exchangeService)
+        public ExchangeRatesServiceController(IExChangeService exchangeService)
         {
             _exchangeService = exchangeService;
         }
