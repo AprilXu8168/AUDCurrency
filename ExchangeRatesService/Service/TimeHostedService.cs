@@ -27,7 +27,7 @@ namespace ExchangeRatesService.Services
             _logger.LogInformation("Timed Hosted Service running.");
 
             // Start the timer to call DoWork method periodically
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(30)); // Change the interval as needed
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(120)); // Change the interval as needed
 
             return Task.CompletedTask;
         }

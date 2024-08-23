@@ -17,7 +17,7 @@ namespace ExchangeRatesService.Controllers
             _exchangeService = exchangeService;
         }
 
-        // GET: api/ExchangeRatesService
+        // GET: api/GetCurrencyPairs
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CurrencyPair>>> GetCurrencyPairs()
         {
@@ -33,7 +33,7 @@ namespace ExchangeRatesService.Controllers
             return Ok(list);
         }
     
-        // GET: api/ExchangeRatesService/5
+        // GET: api/GetCurrencyPair/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CurrencyPair>> GetCurrencyPair(int id)
         {

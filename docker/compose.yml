@@ -26,7 +26,6 @@ services:
       - PGADMIN_DEFAULT_EMAIL=user@dogtainers.com.au
       - PGADMIN_DEFAULT_PASSWORD=user
       - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
-
     volumes:
       - ./pgadmin/servers.json:/pgadmin4/servers.json
     networks:
@@ -41,7 +40,7 @@ services:
     volumes:
       - .:/var/www/nextapp
     ports:
-     - 127.0.0.1:4000:3000
+     - 4000:3000
     depends_on:
      - "postgresdb"
     networks:
@@ -55,7 +54,7 @@ services:
   #     dockerfile: '../ExchangeRatesService/Dockerfile'
   #     target: final
   #   ports:
-  #     - 5000:5151
+  #     - "5151:51"
   #   networks:
   #     - host
 

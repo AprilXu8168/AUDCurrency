@@ -56,6 +56,6 @@ USER $APP_UID
 ENV ASPNETCORE_HTTP_PORTS=5151
 
 # Expose the port the app runs on (optional, for Docker to know about the port)
-EXPOSE 5000
+EXPOSE 51
 
 ENTRYPOINT ["dotnet", "ExchangeRatesService.dll"]
