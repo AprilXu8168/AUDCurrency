@@ -1,6 +1,7 @@
 services:
   postgresdb:
     image: postgres:14.1-alpine
+    container_name: postgresDB_container
     restart: always
     environment:
       - postgresdb=dogtainers
@@ -33,6 +34,7 @@ services:
 
   web:
     image: 'nextapp'
+    container_name: myApp_container
     build:
       context: '../audapp/'
       dockerfile: '../audapp/Dockerfile'
@@ -44,6 +46,18 @@ services:
      - "postgresdb"
     networks:
       - host
+  
+  # server:
+  #   image: docker-server
+  #   container_name: dotnetServer_container
+  #   build:
+  #     context: '../ExchangeRatesService'
+  #     dockerfile: '../ExchangeRatesService/Dockerfile'
+  #     target: final
+  #   ports:
+  #     - 5000:5151
+  #   networks:
+  #     - host
 
 networks:
   host:
