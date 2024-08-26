@@ -8,10 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
-// has to be scoped as it is constructing a dbContext, which is itself scoped.
-builder.Services.AddScoped<IExChangeService, ExChangeService>();
-builder.Services.AddHostedService<TimedHostedService>();
-
 // configure graphql
 builder.Services
     .AddGraphQLServer()
@@ -24,7 +20,9 @@ builder.Services
 
 var conn = builder.Configuration.GetConnectionString("db_connection");
 builder.Services.AddDbContext<CurrenciesDBContext>(options => options.UseNpgsql(conn));
+builder.Services.AddHostedService<TimedHostedService>();
 
+builder.Services.AddScoped<IExChangeService, ExChangeService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

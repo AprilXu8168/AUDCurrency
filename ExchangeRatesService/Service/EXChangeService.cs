@@ -97,7 +97,7 @@ namespace ExchangeRatesService.Services;
             return currencyPairs;
         }
     
-        public async Task<CurrencyPair> GetCurrencyPair(int id)
+        public async Task<CurrencyPair?> GetCurrencyPair(int id)
         {
             var currencyPair = await db.CurrencyPairs.FindAsync(id);
 

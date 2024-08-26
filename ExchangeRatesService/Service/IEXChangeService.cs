@@ -1,6 +1,5 @@
 using ExchangeRatesService.Models;
-namespace ExchangeRatesService.Services
-{
+namespace ExchangeRatesService.Services;
     public interface IExChangeService
     {
     // you shouldn't be returning ActionResult from services, as that is a type specific to Controllers
@@ -12,4 +11,3 @@ namespace ExchangeRatesService.Services
     /// </summary>
     Task<CurrencyPair?> GetCurrencyPair(int id);
     }
-}
