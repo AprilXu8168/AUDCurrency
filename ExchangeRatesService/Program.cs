@@ -9,7 +9,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
 // has to be scoped as it is constructing a dbContext, which is itself scoped.
-builder.Services.AddScoped<IEXChangeService, EXChangeService>();
+builder.Services.AddScoped<IExChangeService, ExChangeService>();
 builder.Services.AddHostedService<TimedHostedService>();
 
 // configure graphql

@@ -1,12 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NuGet.Protocol;
-using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace ExchangeRatesService.Services
 {
     public class TimedHostedService : IHostedService, IDisposable
@@ -34,10 +25,10 @@ namespace ExchangeRatesService.Services
 
         private async void DoWork(object state)
         {
-                    int retryCount = 0;
+        int retryCount = 0;
         const int maxRetries = 5;
         const int delayBetweenRetries = 5000; // 5000ms = 5 seconds
-
+        var count = Interlocked.Increment(ref executionCount);
         while (retryCount < maxRetries)
         {
             try
@@ -45,12 +36,14 @@ namespace ExchangeRatesService.Services
                 using (var scope = _scopeFactory.CreateScope())
                 {
                     // Call your service methods here
-                    var server = scope.ServiceProvider.GetRequiredService<IEXChangeService>();
+                    var server = scope.ServiceProvider.GetRequiredService<IExChangeService>();
                     await server.FetchRateContent();
 
                     _logger.LogInformation("Work completed successfully.");
-                    break; // Exit the loop if successful
                 }
+                _logger.LogInformation("Timed Hosted Service is working. Count: {Count}", count);
+
+                break;
             }
             catch (Exception ex)
             {

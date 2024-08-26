@@ -1,25 +1,15 @@
-
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ExchangeRatesService.Models;
 
 namespace ExchangeRatesService.Services;
-    public class EXChangeService : IEXChangeService
+    public class ExChangeService(CurrenciesDBContext db) : IExChangeService
     {
-        private readonly CurrenciesDBContext _context;
-
-        public EXChangeService(CurrenciesDBContext context)
+       public Task<List<CurrencyPair>> GetCurrencyPairs()
         {
-            _context = context;
+            return db.CurrencyPairs.ToListAsync();
         }
-
-        public async Task<ActionResult<IEnumerable<CurrencyPair>>> GetCurrencyPairs()
-        {
-            return await _context.CurrencyPairs.ToListAsync();
-        }
-
-        public async Task<ActionResult<IEnumerable<CurrencyPair>>> FetchRateContent()
+        public async Task<List<CurrencyPair>> FetchRateContent()
         {
             // Fetch json from public api
             string url = "http://api.currencyapi.com/v3/latest"; 
@@ -46,10 +36,9 @@ namespace ExchangeRatesService.Services;
                 }
             }
     
-
             CurrencyRates currency = JsonConvert.DeserializeObject<CurrencyRates>(content); 
             // Console.Write(content); 
-            var maxId = _context.CurrencyPairs.Max(ci => (int?)ci.ID) ?? 0;
+            var maxId = db.CurrencyPairs.Max(ci => (int?)ci.ID) ?? 0;
             var newId = maxId;
             List<CurrencyPair> currencyPairs = new List<CurrencyPair>();
 
@@ -66,16 +55,16 @@ namespace ExchangeRatesService.Services;
                     };
                     Console.WriteLine("Current item: {0}", newItem.Name);
 
-                    var existingItem = await _context.CurrencyPairs.FindAsync(newItem.ID);
+                    var existingItem = await db.CurrencyPairs.FindAsync(newItem.ID);
                     try
                     {
                         if (existingItem == null)
                         {
                             // Add the new item to the context
-                            _context.CurrencyPairs.Add(newItem);
+                            db.CurrencyPairs.Add(newItem);
 
                             // Attempt to save changes to the database
-                            await _context.SaveChangesAsync();
+                            await db.SaveChangesAsync();
 
                             // Add the new item to the list
                             currencyPairs.Add(newItem);
@@ -108,9 +97,9 @@ namespace ExchangeRatesService.Services;
             return currencyPairs;
         }
     
-        public async Task<ActionResult<CurrencyPair>> GetCurrencyPair(int id)
+        public async Task<CurrencyPair> GetCurrencyPair(int id)
         {
-            var currencyPair = await _context.CurrencyPairs.FindAsync(id);
+            var currencyPair = await db.CurrencyPairs.FindAsync(id);
 
             if (currencyPair == null)
             {
