@@ -27,26 +27,46 @@ namespace ExchangeRatesService.Services
             _logger.LogInformation("Timed Hosted Service running.");
 
             // Start the timer to call DoWork method periodically
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(120)); // Change the interval as needed
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(900)); // Change the interval as needed
 
             return Task.CompletedTask;
         }
 
-        private void DoWork(object state)
+        private async void DoWork(object state)
         {
-            var count = Interlocked.Increment(ref executionCount);
+                    int retryCount = 0;
+        const int maxRetries = 5;
+        const int delayBetweenRetries = 5000; // 5000ms = 5 seconds
 
-            // Create a scope to resolve the scoped service
-            using (var scope = _scopeFactory.CreateScope())
+        while (retryCount < maxRetries)
+        {
+            try
             {
-                var exchangeService = scope.ServiceProvider.GetRequiredService<IEXChangeService>();
-                var res = exchangeService.FetchRateContent(); // Ensure FetchUpdate method is available in IExchangeService
-                var output = JsonSerializer.Serialize(res, new JsonSerializerOptions { WriteIndented = true });
-                // Console.WriteLine($"Number of items received: {output.Count()}");
+                using (var scope = _scopeFactory.CreateScope())
+                {
+                    // Call your service methods here
+                    var server = scope.ServiceProvider.GetRequiredService<IEXChangeService>();
+                    await server.FetchRateContent();
+
+                    _logger.LogInformation("Work completed successfully.");
+                    break; // Exit the loop if successful
+                }
             }
-        
-            _logger.LogInformation("Timed Hosted Service is working. Count: {Count}", count);
+            catch (Exception ex)
+            {
+                retryCount++;
+                _logger.LogError(ex, "An error occurred while doing the work. Attempt {RetryCount} of {MaxRetries}", retryCount, maxRetries);
+
+                if (retryCount >= maxRetries)
+                {
+                    _logger.LogError("Max retry attempts reached. Work failed.");
+                    break;
+                }
+
+                await Task.Delay(delayBetweenRetries); // Wait before retrying
+            }
         }
+    }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {

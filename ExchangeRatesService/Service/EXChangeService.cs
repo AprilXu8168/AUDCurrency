@@ -23,7 +23,8 @@ namespace ExchangeRatesService.Services;
         {
             // Fetch json from public api
             string url = "http://api.currencyapi.com/v3/latest"; 
-            string apikey = "fca_live_fcxICI1hMR8xzFktbwu0P9mDaJlCwwgHpcHhiUsY";
+            string apikey = "cur_live_T7700pGjZzpJbp0zN5s6Whnwj4fDo2ZttCGViU0r";
+            
             string content = "";
 
             using (HttpClient client = new HttpClient())
