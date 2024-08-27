@@ -22,9 +22,11 @@ builder.Services
     // similar to the above. adds services to query/mutation resolver DI and avoids needing to add [service]
     .RegisterDbContext<CurrenciesDBContext>(DbContextKind.Synchronized)
     .AddQueryType<Query>()
+    .AddMutationType<Mutation>()
     .AddProjections()
     .AddFiltering()
-    .AddSorting();
+    .AddSorting()
+    .AddType<CurrencyPair>();
 
 var conn = builder.Configuration.GetConnectionString("db_connection");
 builder.Services.AddDbContext<CurrenciesDBContext>(options => options.UseNpgsql(conn));
