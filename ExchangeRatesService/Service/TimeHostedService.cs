@@ -8,13 +8,15 @@ namespace ExchangeRatesService.Services
         private readonly ILogger<TimedHostedService> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly PeriodicTimer _timer;
+        private readonly IWebHostEnvironment _env;
         private int _count;
 
-        public TimedHostedService(ILogger<TimedHostedService> logger, IServiceScopeFactory scopeFactory)
+        public TimedHostedService(ILogger<TimedHostedService> logger, IServiceScopeFactory scopeFactory, IWebHostEnvironment env)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
-            _timer = Program.isDebug ? new PeriodicTimer(TimeSpan.FromSeconds(120)) : new PeriodicTimer(TimeSpan.FromHours(120));
+            _env = env;
+            _timer = _env.IsDevelopment() ? new PeriodicTimer(TimeSpan.FromSeconds(120)) : new PeriodicTimer(TimeSpan.FromHours(1));
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

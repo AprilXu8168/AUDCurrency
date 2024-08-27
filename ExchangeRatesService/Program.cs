@@ -4,6 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Access the environment
+var environment = builder.Environment;
+
+// Load configurations based on the environment
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
@@ -29,6 +37,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    Console.WriteLine("Running in Development mode");
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error"); // Custom error handling in Production
+    Console.WriteLine("Running in Production mode");
 }
 
 app.UseSwagger();
@@ -38,7 +52,7 @@ app.UseSwaggerUI(options =>
     options.RoutePrefix = string.Empty; // Set the Swagger UI at the root URL
 });
 app.MapGraphQL();
-app.UseSwaggerUI();
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -57,20 +71,20 @@ app.Run();
 /// The 'Program' class is a special class that always exists in a .net application
 /// Here we are extending it and using it for thread-safe global variables. Things that are stateless and will not need mocking in tests.
 /// </summary>
-public partial class Program
-{
-    /// <summary>
-    /// HttpClient is thread safe in .net. We only need a single instance per application.
-    /// </summary>
-    public static readonly HttpClient httpClient = new();
+// public partial class Program
+// {
+//     /// <summary>
+//     /// HttpClient is thread safe in .net. We only need a single instance per application.
+//     /// </summary>
+//     public static readonly HttpClient httpClient = new();
 
-    /// <summary>
-    /// An easy way to check if debug mode is enabled without causing ugly code and formatting issues
-    /// </summary>
-    public static bool isDebug =
-#if DEBUG
-        true;
-#else
-        false;
-#endif
-}
+//     /// <summary>
+//     /// An easy way to check if debug mode is enabled without causing ugly code and formatting issues
+//     /// </summary>
+//     public static bool isDebug =
+// #if DEBUG
+//         true;
+// #else
+//         false;
+// #endif
+// }
