@@ -42,21 +42,30 @@ services:
     ports:
      - 4000:3000
     depends_on:
-     - "postgresdb"
+     - "server"
     networks:
       - host
   
-  # server:
-  #   image: docker-server
-  #   container_name: dotnetServer_container
-  #   build:
-  #     context: '../ExchangeRatesService'
-  #     dockerfile: '../ExchangeRatesService/Dockerfile'
-  #     target: final
-  #   ports:
-  #     - "5151:51"
-  #   networks:
-  #     - host
+  server:
+    image: docker-server
+    container_name: dotnetServer_container
+    build:
+      context: '../ExchangeRatesService'
+      dockerfile: '../ExchangeRatesService/Dockerfile'
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    ports:
+      - "5151:5151"
+    depends_on:
+     - "postgresdb"
+    networks:
+      - host
 
 networks:
   host:
+    driver: bridge

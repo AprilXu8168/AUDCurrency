@@ -14,7 +14,7 @@ namespace ExchangeRatesService.Services
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _scopeFactory = scopeFactory ?? throw new ArgumentNullException(nameof(scopeFactory));
-            _timer = Program.isDebug ? new PeriodicTimer(TimeSpan.FromSeconds(900)) : new PeriodicTimer(TimeSpan.FromHours(1));
+            _timer = Program.isDebug ? new PeriodicTimer(TimeSpan.FromSeconds(120)) : new PeriodicTimer(TimeSpan.FromHours(120));
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

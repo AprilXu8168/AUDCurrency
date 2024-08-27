@@ -13,7 +13,7 @@ class App extends Component{
     }
     this.refreshCurrency = this.refreshCurrency.bind(this);
     this.fetchLatest = this.fetchLatest.bind(this);
-    this.API_URL = "http://localhost:5151/"
+    this.API_URL = "http://127.0.0.1:5151/"
   }
 
   componentDidMount(){
