@@ -142,6 +142,8 @@ open a browser, url: localhost:8888
 - A docker compose file to run the whole thing
 - Communication with a public (and free) exchange rates api
 - Postgres database for storage
+- Add nunit3 to add some basic tests (very basic)
+- Add Microsoft Playwright to test the front end
  
 ### Function Requirements
 - Display (using react and next js pages api) the current exchange rates for various AUD currency pairs, requested from your .net api via graphql. You'll need to find a public api to get this data from.
@@ -154,9 +156,9 @@ open a browser, url: localhost:8888
  
  ### Todo Next
 
-- Add a "background service" to your api called CurrencyUpdater. Every (2 minutes in debug mode,  otherwise every hour) this should call currencyService.UpdateExchangeRates() (or whatever your function is called)
+- <s>Add a "background service" to your api called CurrencyUpdater. Every (2 minutes in debug mode,  otherwise every hour) this should call currencyService.UpdateExchangeRates()</s> 
 
-- Package this all up in docker. For a way to fix your localhost issue
+- <s>Package this all up in docker. For a way to fix your localhost issue</s>
 
 - <s>Add requirements to readme doc</s>
 
@@ -183,11 +185,7 @@ open a browser, url: localhost:8888
 
 - Error Handler
 
-- Hourly reFetch triggerh
-
-- Check data not same every fetch
-
-- About timestamp
+- <s>Hourly reFetch trigger</s>
 
 - <s>Find a way to call the ExchangeRatesController.UpdateRates controller route from your browser, ideally via the swagger docs that .net can auto generate for you. **Document** how to view this in your repo.</s>
 
