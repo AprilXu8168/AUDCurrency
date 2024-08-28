@@ -70,7 +70,7 @@ namespace ExchangeRatesService.Services;
                             currencyPairs.Add(newItem);
 
                             // Log success message
-                            Console.WriteLine("Inserted currency: {0}: {1}--{2}", newItem.ID, newItem.Name, newItem.Value);
+                            Console.WriteLine("Inserted currency by RESTful api: {0}: {1}--{2}", newItem.ID, newItem.Name, newItem.Value);
                         }
                     }
                     catch (InvalidOperationException ex)

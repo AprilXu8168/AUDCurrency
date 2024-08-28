@@ -64,9 +64,7 @@ class App extends Component{
 
       if (result.data && result.data.currencyPairs) {
         const currencyPairs = result.data.currencyPairs;
-        const recordCount = currencyPairs.length; // Count the number of records
-        console.log(`Graphql has returned ${recordCount} existing records.`);
-        
+        console.log(`Graphql has returned existing records.`);
         this.setState({ currencies: currencyPairs });
       } else {
         alert("No new records were received.");
@@ -77,18 +75,54 @@ class App extends Component{
   }
 
 
-  // Calling methods from backend API as fetch only defined in service instead of
-  async fetchLatest(){
+  // Fetch REST api endpoint
+  // async fetchLatest(){
+  //   try {
+  //     const response = await fetch(this.API_URL + "api/ExchangeRatesService/update_Rates");
+  //     const data = await response.json();
+
+  //     // Check if the data has been received successfully
+  //     if (data && data.value) {
+  //       alert(`Received new records from RestfulAPI.`);
+        
+  //       this.setState({ newFetchRates: data.value });
+  //     } else {
+  //       alert("No new records were received.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching currency data:", error);
+  //   }
+  // }
+
+  //Fetch with grapgql Endpoint
+    async fetchLatest(){
     try {
-      const response = await fetch(this.API_URL + "api/ExchangeRatesService/update_Rates");
+      const response = await fetch(this.API_URL + "graphql", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Add any other headers if needed, e.g., authentication tokens
+        },
+        body: JSON.stringify({
+          query: `
+            mutation {
+              fetchnUpdate {
+                id
+                name
+                timestamp
+                value
+              }
+            }
+          `,
+        }),      });
+
       const data = await response.json();
 
       // Check if the data has been received successfully
-      if (data && data.value) {
-        const recordCount = data.value.length; // Count the number of new records
-        alert(`Received ${recordCount} new records.`);
+      if (data) {
+        alert(`Received new records fetched by graphql.`);
         
-        this.setState({ newFetchRates: data.value });
+        this.setState({ newFetchRates: data });
       } else {
         alert("No new records were received.");
       }
@@ -97,7 +131,6 @@ class App extends Component{
     }
   }
 
-  
   render(){
     const{currencies} = this.state;
     // Ensure data is defined and is an array

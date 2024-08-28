@@ -12,6 +12,9 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
+var conn = builder.Configuration.GetConnectionString("db_connection");
+builder.Services.AddDbContext<CurrenciesDBContext>(options => options.UseNpgsql(conn));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
@@ -28,8 +31,6 @@ builder.Services
     .AddSorting()
     .AddType<CurrencyPair>();
 
-var conn = builder.Configuration.GetConnectionString("db_connection");
-builder.Services.AddDbContext<CurrenciesDBContext>(options => options.UseNpgsql(conn));
 builder.Services.AddHostedService<TimedHostedService>();
 
 builder.Services.AddScoped<IExChangeService, ExChangeService>();
