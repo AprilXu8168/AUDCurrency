@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { table } from 'console';
+import { setMaxIdleHTTPParsers } from 'http';
 
 test('has title', async ({ page }) => {
   await page.goto('https://playwright.dev/');
@@ -20,6 +20,7 @@ test('get started link', async ({ page }) => {
 
 test('currency table', async ({ page })=> {
   await page.goto('http://localhost:4000');
-  const table = await page.locator('#CurrencyListTanble');
-  expect(await table.isVisible()).toBe(true);
+  await page.waitForSelector('#CurrencyListTanble');
+  const table = page.locator('#CurrencyListTanble');
+  await expect(await table.isVisible()).toBe(true);
 });
