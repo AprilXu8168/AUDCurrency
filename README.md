@@ -35,6 +35,21 @@ Store and display AUD currency pair
     http://localhost:5151/api/ExchangeRatesService/id
     e.g. http://localhost:5151/api/ExchangeRatesService/46
 
+### To test dotnet app running
+ ```
+cd dotnetTest
+dotnet test ServerTest.csproj
+```
+
+Example output:
+```
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+testing first row of table: CNY --> 8/15/2024, 12:19:18 PM
+
+received title is: Next.JS App
+
+```
 ## To interacte with database via pgadmin
 
 open a browser, url: localhost:8888
