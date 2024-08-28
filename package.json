@@ -1,0 +1,14 @@
+{
+  "name": "audcurrency",
+  "version": "1.0.0",
+  "description": "Store and display AUD currency pair",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.46.1",
+    "@types/node": "^22.5.1"
+  }
+}
