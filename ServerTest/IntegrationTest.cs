@@ -5,7 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 namespace ServerTest
 {
-    public class Tests
+    public class integrationTests
     {
         private IWebDriver driver;
         private WebDriverWait wait;
@@ -24,7 +24,7 @@ namespace ServerTest
             driver.Navigate().GoToUrl("http://localhost:4000");
             string actualTitle = driver.Title;
             Console.WriteLine("received title is: {0}", actualTitle);
-            Assert.AreEqual("Next.JS App", actualTitle, "The page title does not match the expected title.");
+            Assert.That(actualTitle, Is.EqualTo("Next.JS App"), "The page title does not match the expected title.");
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace ServerTest
 
             // Assert the values match the expected data
             Console.WriteLine("testing first row of table: {0} --> {1}", actualName, acutualValue);
-            Assert.AreEqual("CNY", actualName, "The first item name does not match.");
-            Assert.AreEqual("8/15/2024, 12:19:18 PM", acutualValue, "The first item value does not match.");
+            Assert.That(actualName, Is.EqualTo("CNY"));
+            Assert.That(acutualValue, Is.EqualTo("8/15/2024, 12:19:18 PM"));
         }
 
         [OneTimeTearDown]
