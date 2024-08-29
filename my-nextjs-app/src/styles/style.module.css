@@ -1,0 +1,84 @@
+/* home/root css */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures the container takes at least the full viewport height */
+  }
+  
+  .header {
+    background-color: #f4f4f4;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .main {
+    flex: 1; /* Allows the main content area to grow and take up remaining space */
+    padding: 20px;
+  }
+  
+  .footer {
+    background-color: #f4f4f4;
+    padding: 10px;
+    text-align: center;
+  }
+
+/* filter section css */
+.filterContainer {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .filterLabel {
+    margin-right: 10px;
+  }
+  
+  .filterSelect {
+    padding: 5px;
+    font-size: 1rem;
+  }
+  
+  .infoBar {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+
+
+  /* table section css */
+  .title {
+    font-size: 2rem;
+    color: #333;
+    margin: 100; /* Remove default margin */
+  }
+
+.tableContainer {
+    margin: 20px;
+    overflow-x: auto; /* Allows horizontal scrolling if the table is too wide */
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse; /* Collapses borders to a single border */
+    margin-top: 10px;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd; /* Light gray border */
+    padding: 8px; /* Padding for spacing */
+    text-align: left; /* Align text to the left */
+  }
+  
+  .table th {
+    background-color: #f4f4f4; /* Light gray background for header */
+    font-weight: bold; /* Bold text for header */
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternating row background */
+  }
+  
+  .table tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+  }
