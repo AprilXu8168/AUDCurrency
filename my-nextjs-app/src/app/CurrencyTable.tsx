@@ -32,7 +32,7 @@ const CurrencyTable: React.FC<CurrencyTableProps> = ({ currencies }) => {
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>{item.value}</td>
-              <td>{item.value}</td>
+              <td>{new Date(item.timestamp).toLocaleString()}</td>
           </tr>
           ))}
         </tbody>

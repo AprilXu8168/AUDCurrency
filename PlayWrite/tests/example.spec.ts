@@ -20,7 +20,7 @@ test('get started link', async ({ page }) => {
 
 test('currency table', async ({ page })=> {
   await page.goto('http://localhost:4000');
-  await page.waitForSelector('#CurrencyListTanble');
-  const table = page.locator('#CurrencyListTanble');
+  await page.waitForSelector('#CurrencyListTable');
+  const table = page.locator('#CurrencyListTable');
   await expect(await table.isVisible()).toBe(true);
 });

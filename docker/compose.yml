@@ -31,12 +31,27 @@ services:
     networks:
       - host
 
+  # web:
+  #   image: 'nextapp'
+  #   container_name: myApp_container
+  #   build:
+  #     context: '../audapp/'
+  #     dockerfile: '../audapp/Dockerfile'
+  #   volumes:
+  #     - .:/var/www/nextapp
+  #   ports:
+  #    - 4000:3000
+  #   depends_on:
+  #    - "server"
+  #   networks:
+  #     - host
+  
   web:
     image: 'nextapp'
     container_name: myApp_container
     build:
-      context: '../audapp/'
-      dockerfile: '../audapp/Dockerfile'
+      context: '../my-nextjs-app/'
+      dockerfile: '../my-nextjs-app/Dockerfile'
     volumes:
       - .:/var/www/nextapp
     ports:
@@ -45,7 +60,7 @@ services:
      - "server"
     networks:
       - host
-  
+
   server:
     image: docker-server
     container_name: dotnetServer_container

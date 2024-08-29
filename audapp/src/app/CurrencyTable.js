@@ -3,7 +3,7 @@ import React from 'react';
 const CurrencyTable = ({ currencies }) => {
     return (
         <div className="table-container">
-          <table className="table" id='CurrencyListTanble'>
+          <table className="table" id='CurrencyListTable'>
             <thead>
               <tr>
                 <th>ID</th>

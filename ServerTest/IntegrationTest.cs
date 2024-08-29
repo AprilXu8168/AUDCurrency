@@ -32,7 +32,7 @@ namespace ServerTest
         {
             driver.Navigate().GoToUrl("http://localhost:4000");
             System.Threading.Thread.Sleep(2000);
-            IWebElement table = driver.FindElement(By.Id("CurrencyListTanble"));
+            IWebElement table = driver.FindElement(By.Id("CurrencyListTable"));
             IWebElement firstRow = table.FindElement(By.CssSelector("tbody tr:first-child"));
 
             // Extract the data from the first cell (Name) and the second cell (Value)
