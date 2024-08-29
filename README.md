@@ -9,11 +9,12 @@ Store and display AUD currency pair
 | SwaggerApi   | [Swagger](http://localhost:5151)                                   |
 | Postgres     | [localhost:5432](http://localhost:5432/)                           |
 | Graphql      | [HotChocolateIDE](http://localhost:5151/graphql/)                  |
-| FrontEnd      | [Next.js](http://localhost:3000/)                                 |
+| FrontEnd      | [Next.js](http://localhost:4000/)                                 |
 
 ### To review all available api operations:
 [localhost:5151](http://localhost:5151)
 ![api home page](assets/image.png)
+
 ### To view all saved currency data
 
 - Option 1
@@ -22,18 +23,59 @@ Store and display AUD currency pair
 - Option 2
     open a brwoser, url: http://localhost:5151/api/ExchangeRatesService
 
+- Options 3
+    open a broswer, go to url: http://localhost:5151/graphql/
+```
+    query {
+        currencyPairs {
+            id
+            name
+            timestamp
+            value
+        }
+    }
+```
+
 ### To trigger a fetch action
 - Option 1
     Simple click GET /api/ExchangeRatesService/update_Rates
+
 - Option 2
     open a brwoser, url: http://localhost:5151/api/ExchangeRatesService/update_Rates
 
+- Option 3
+    open a broswer, go to url: http://localhost:5151/graphql/
+```
+mutation {
+  fetchnUpdate {
+    id
+    name
+    timestamp
+    value
+  }
+}
+
+```
 ### To review single record from db
 - Option 1:
     Simple click GET /api/ExchangeRatesService/{id}
+
 - Option 2:
     http://localhost:5151/api/ExchangeRatesService/id
     e.g. http://localhost:5151/api/ExchangeRatesService/46
+
+- Option 3:
+    open a broswer, go to url: http://localhost:5151/graphql/
+```
+    query {
+        currencyPair(id: 190) {
+            id
+            name
+            timestamp
+            value
+        }
+    }
+```
 
 ### To test dotnet app running
  ```
@@ -48,7 +90,6 @@ A total of 1 test files matched the specified pattern.
 testing first row of table: CNY --> 8/15/2024, 12:19:18 PM
 
 received title is: Next.JS App
-
 ```
 ## To interacte with database via pgadmin
 
@@ -70,19 +111,18 @@ open a browser, url: localhost:8888
     - password: dogtainers
 </details>
 
-### To start up the backend 
+<!-- ### To start up the backend 
 ```
     cd audBackEnd
     dotnet run dev
 ```
-<!-- 
 ### To install and start up frontEnd 
 ```
     cd audapp
     npm install
     npm run dev
 ``` -->
-### To start up postgres DB,pgAdmin and nextapp within docker compose
+### To start up the whole services within docker compose
 
 ```
     docker compose -f docker/compose.yml up --build
@@ -116,22 +156,17 @@ open a browser, url: localhost:8888
   {
     "id": 1,
     "timestamp": 1723688358,
-    "name": "Chinese",
-    "moneyCode": "CNY",
-    "baseValue": 1,
+    "name": "CNY",
     "value": 4.776
   },
   {
     "id": 2,
     "timestamp": 1723688338,
-    "name": "Japanese",
-    "moneyCode": "JPY",
-    "baseValue": 1,
+    "name": "JPY",
     "value": 430
   }
 ]
 ```
-
 
 ## Requirement and Progress
 
