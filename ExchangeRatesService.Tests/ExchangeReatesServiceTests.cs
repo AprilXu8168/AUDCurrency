@@ -4,7 +4,7 @@ using ExchangeRatesService.Models;
 using ExchangeRatesService.Services;
 
 [TestFixture]
-public class CurrencyDBContextTest
+public class ExchangeReatesServiceTests
 {
     private CurrenciesDBContext _context;
     private ExChangeService _exchangeRatesServer;
@@ -48,7 +48,7 @@ public class CurrencyDBContextTest
         // Assert
         foreach (var currencyPair in currencyPairs)
         {
-            Console.WriteLine($" From DB Context: \nID: {currencyPair.ID}, Timestamp: {currencyPair.Timestamp}, Name: {currencyPair.Name}, Value: {currencyPair.Value}");
+            Console.WriteLine($"test No.1 From DB Context: \nID: {currencyPair.ID}, Timestamp: {currencyPair.Timestamp}, Name: {currencyPair.Name}, Value: {currencyPair.Value}");
         }
         Assert.That(currencyPairs, Is.Not.Empty, "DB Failed, please check");
     }
@@ -60,7 +60,7 @@ public class CurrencyDBContextTest
         List<CurrencyPair> currencyPairs  = await ret;
         foreach (var currencyPair in currencyPairs)
         {
-            Console.WriteLine($" From Exchange Server: \nID: {currencyPair.ID}, Timestamp: {currencyPair.Timestamp}, Name: {currencyPair.Name}, Value: {currencyPair.Value}");
+            Console.WriteLine($"test No.2 From Exchange Server: \nID: {currencyPair.ID}, Timestamp: {currencyPair.Timestamp}, Name: {currencyPair.Name}, Value: {currencyPair.Value}");
         }        
         Assert.That(currencyPairs, Is.Not.Null, "Result should not be Null");
     }
@@ -71,7 +71,7 @@ public class CurrencyDBContextTest
         Task<CurrencyPair> ret = _exchangeRatesServer.GetCurrencyPair(id: 2);
         CurrencyPair currencyPair  = await ret;
 
-        Console.WriteLine($" Search with Exchange Server: \nID: {currencyPair.ID}, Timestamp: {currencyPair.Timestamp}, Name: {currencyPair.Name}, Value: {currencyPair.Value}");
+        Console.WriteLine($"test No.3 Search with Exchange Server: \nID: {currencyPair.ID}, Timestamp: {currencyPair.Timestamp}, Name: {currencyPair.Name}, Value: {currencyPair.Value}");
         Assert.That(currencyPair, Is.Not.Null, "Result should not be Null");
     }
 
