@@ -3,6 +3,7 @@ using NUnit.Framework;
 using ExchangeRatesService.Models;
 using ExchangeRatesService.Services;
 
+namespace ExchangeRatesService.Server.Test;
 [TestFixture]
 public class ExchangeReatesServiceTests
 {
